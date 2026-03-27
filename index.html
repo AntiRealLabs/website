@@ -93,7 +93,6 @@
             }
         }
 
-        /* Logo */
         .sigil {
             width: 180px;
             height: 180px;
@@ -127,7 +126,7 @@
             50% { transform: scale(1.05); opacity: 0.6; }
         }
 
-        /* Babel tower of haiku */
+        /* Babel tower */
         .babel {
             display: flex;
             flex-direction: column;
@@ -145,7 +144,6 @@
             animation: verseIn 1.2s cubic-bezier(0.16, 1, 0.3, 1) both;
         }
 
-        /* Each verse fades in sequentially with different delays */
         .verse:nth-child(1) { animation-delay: 1.0s; }
         .verse:nth-child(2) { animation-delay: 1.5s; }
         .verse:nth-child(3) { animation-delay: 2.0s; }
@@ -166,61 +164,61 @@
             }
         }
 
-        /* The original Spanish — most visible */
+        /* Spanish — the original, slightly highlighted */
         .verse-es {
             font-family: 'Cormorant Garamond', Georgia, serif;
-            font-size: 1.35rem;
+            font-size: 1.05rem;
             color: var(--accent);
-            margin-bottom: 1.8rem;
+            margin-bottom: 1.3rem;
             letter-spacing: 0.01em;
         }
 
         /* Japanese */
         .verse-ja {
             font-family: 'Noto Sans JP', sans-serif;
-            font-size: 0.95rem;
+            font-size: 0.9rem;
             font-weight: 200;
-            color: rgba(212, 208, 202, 0.35);
-            margin-bottom: 1.2rem;
-            letter-spacing: 0.08em;
+            color: rgba(212, 208, 202, 0.50);
+            margin-bottom: 1.1rem;
+            letter-spacing: 0.06em;
         }
 
-        /* Arabic — RTL */
+        /* Arabic */
         .verse-ar {
             font-family: 'Noto Sans Arabic', sans-serif;
-            font-size: 1rem;
+            font-size: 0.9rem;
             font-weight: 200;
-            color: rgba(212, 208, 202, 0.25);
+            color: rgba(212, 208, 202, 0.42);
             direction: rtl;
-            margin-bottom: 1.2rem;
+            margin-bottom: 1.1rem;
         }
 
         /* Korean */
         .verse-ko {
             font-family: 'Noto Sans KR', sans-serif;
-            font-size: 0.9rem;
+            font-size: 0.88rem;
             font-weight: 200;
-            color: rgba(212, 208, 202, 0.20);
-            margin-bottom: 1.2rem;
+            color: rgba(212, 208, 202, 0.35);
+            margin-bottom: 1.1rem;
             letter-spacing: 0.04em;
         }
 
-        /* Russian / Cyrillic */
+        /* Russian */
         .verse-ru {
             font-family: 'Cormorant Garamond', Georgia, serif;
-            font-size: 0.95rem;
+            font-size: 0.9rem;
             font-weight: 300;
-            color: rgba(212, 208, 202, 0.15);
-            margin-bottom: 1.2rem;
+            color: rgba(212, 208, 202, 0.30);
+            margin-bottom: 1.1rem;
             letter-spacing: 0.03em;
         }
 
-        /* Hindi / Devanagari */
+        /* Hindi */
         .verse-hi {
             font-family: 'Noto Sans Devanagari', sans-serif;
-            font-size: 0.9rem;
+            font-size: 0.85rem;
             font-weight: 200;
-            color: rgba(212, 208, 202, 0.10);
+            color: rgba(212, 208, 202, 0.25);
         }
 
         /* Vertical line */
@@ -254,6 +252,47 @@
             color: var(--accent);
         }
 
+        /* Pixel art flower */
+        .bloom {
+            position: fixed;
+            bottom: 10vh;
+            left: 8vw;
+            width: 80px;
+            height: 45px;
+            z-index: 7;
+            border-radius: 4px;
+            overflow: hidden;
+            opacity: 0;
+            animation: bloomIn 2s ease 4.8s both;
+            mix-blend-mode: screen;
+        }
+
+        .bloom video {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            image-rendering: pixelated;
+        }
+
+        .bloom::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            box-shadow: inset 0 0 15px rgba(0, 0, 0, 0.6);
+            pointer-events: none;
+        }
+
+        @keyframes bloomIn {
+            from {
+                opacity: 0;
+                filter: blur(3px);
+            }
+            to {
+                opacity: 0.7;
+                filter: blur(0);
+            }
+        }
+
         /* Corner details */
         .epoch {
             position: fixed;
@@ -266,7 +305,7 @@
             z-index: 6;
             writing-mode: vertical-rl;
             opacity: 0;
-            animation: fadeIn 1.5s ease 4.8s both;
+            animation: fadeIn 1.5s ease 5s both;
         }
 
         .coord {
@@ -279,7 +318,7 @@
             color: var(--text-ghost);
             z-index: 6;
             opacity: 0;
-            animation: fadeIn 1.5s ease 4.8s both;
+            animation: fadeIn 1.5s ease 5s both;
         }
 
         /* Responsive */
@@ -295,13 +334,19 @@
                 padding: 0 1rem;
             }
             .verse-es {
-                font-size: 1.05rem;
+                font-size: 0.9rem;
             }
             .verse-ja, .verse-ar, .verse-ru {
-                font-size: 0.8rem;
+                font-size: 0.78rem;
             }
             .verse-ko, .verse-hi {
                 font-size: 0.75rem;
+            }
+            .bloom {
+                width: 60px;
+                height: 34px;
+                bottom: 6vh;
+                left: 5vw;
             }
             .coord, .epoch {
                 display: none;
@@ -322,7 +367,7 @@
 
         <div class="babel">
             <p class="verse verse-es">Aquellas manos que compusieron el universo, desmantelaron todo el tejido de la realidad.</p>
-            <p class="verse verse-ja"宇宙を組み上げたその手が、現実の織物をすべて解き放った。</p>
+            <p class="verse verse-ja">宇宙を組み上げたその手が、現実の織物をすべて解き放った。</p>
             <p class="verse verse-ar">تلك الأيدي التي صاغت الكون، فكّكت نسيج الواقع بأكمله</p>
             <p class="verse verse-ko">우주를 지은 그 손이, 현실의 모든 직물을 해체했다.</p>
             <p class="verse verse-ru">Те руки, что сложили вселенную, разобрали всю ткань реальности.</p>
@@ -331,7 +376,14 @@
 
         <div class="line"></div>
 
-        <a href="mailto:admin@antireallabs.com" class="signal">info@antireallabs.com</a>
+        <a href="mailto:admin@antireallabs.com" class="signal">admin@antireallabs.com</a>
+    </div>
+
+    <!-- Pixel art flower -->
+    <div class="bloom">
+        <video autoplay loop muted playsinline>
+            <source src="flor.mp4" type="video/mp4">
+        </video>
     </div>
 
     <span class="epoch">MMXXVI</span>
