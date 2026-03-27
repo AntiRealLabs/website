@@ -1,0 +1,414 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Anti-Real Labs</title>
+    <meta name="description" content="Anti-Real Labs">
+    <meta property="og:title" content="Anti-Real Labs">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://antireallabs.com">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&family=Space+Mono:wght@400&family=Noto+Sans+JP:wght@200;300&family=Noto+Sans+Arabic:wght@200;300&family=Noto+Sans+KR:wght@200;300&family=Noto+Sans+Devanagari:wght@200;300&display=swap" rel="stylesheet">
+    <style>
+        *, *::before, *::after {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --bg: #050505;
+            --text: #d4d0ca;
+            --text-dim: #3a3835;
+            --text-ghost: #1e1d1b;
+            --accent: #b8a58a;
+        }
+
+        html {
+            -webkit-font-smoothing: antialiased;
+        }
+
+        body {
+            background: var(--bg);
+            color: var(--text);
+            font-family: 'Cormorant Garamond', Georgia, serif;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            cursor: crosshair;
+            overflow-x: hidden;
+            overflow-y: auto;
+        }
+
+        canvas#void {
+            position: fixed;
+            inset: 0;
+            z-index: 0;
+            opacity: 0.4;
+        }
+
+        body::after {
+            content: '';
+            position: fixed;
+            inset: 0;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.025'/%3E%3C/svg%3E");
+            pointer-events: none;
+            z-index: 10;
+        }
+
+        body::before {
+            content: '';
+            position: fixed;
+            inset: 0;
+            background: radial-gradient(ellipse at center, transparent 30%, rgba(0,0,0,0.7) 100%);
+            pointer-events: none;
+            z-index: 5;
+        }
+
+        .core {
+            position: relative;
+            z-index: 6;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            padding: 3rem 2rem;
+            animation: materialize 2.5s cubic-bezier(0.16, 1, 0.3, 1) both;
+        }
+
+        @keyframes materialize {
+            from {
+                opacity: 0;
+                transform: scale(0.96);
+                filter: blur(8px);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1);
+                filter: blur(0);
+            }
+        }
+
+        /* Logo */
+        .sigil {
+            width: 180px;
+            height: 180px;
+            margin-bottom: 3.5rem;
+            position: relative;
+        }
+
+        .sigil img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            filter: drop-shadow(0 0 60px rgba(184, 165, 138, 0.06));
+            transition: filter 1s ease;
+        }
+
+        .sigil:hover img {
+            filter: drop-shadow(0 0 100px rgba(184, 165, 138, 0.12));
+        }
+
+        .sigil::after {
+            content: '';
+            position: absolute;
+            inset: -24px;
+            border: 1px solid rgba(184, 165, 138, 0.04);
+            border-radius: 50%;
+            animation: breathe 6s ease-in-out infinite;
+        }
+
+        @keyframes breathe {
+            0%, 100% { transform: scale(1); opacity: 0.2; }
+            50% { transform: scale(1.05); opacity: 0.6; }
+        }
+
+        /* Babel tower of haiku */
+        .babel {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0;
+            margin-bottom: 3rem;
+        }
+
+        .verse {
+            font-style: italic;
+            font-weight: 300;
+            line-height: 1.4;
+            white-space: nowrap;
+            opacity: 0;
+            animation: verseIn 1.2s cubic-bezier(0.16, 1, 0.3, 1) both;
+        }
+
+        /* Each verse fades in sequentially with different delays */
+        .verse:nth-child(1) { animation-delay: 1.0s; }
+        .verse:nth-child(2) { animation-delay: 1.5s; }
+        .verse:nth-child(3) { animation-delay: 2.0s; }
+        .verse:nth-child(4) { animation-delay: 2.5s; }
+        .verse:nth-child(5) { animation-delay: 3.0s; }
+        .verse:nth-child(6) { animation-delay: 3.5s; }
+
+        @keyframes verseIn {
+            from {
+                opacity: 0;
+                transform: translateY(12px);
+                filter: blur(4px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+                filter: blur(0);
+            }
+        }
+
+        /* The original Spanish — most visible */
+        .verse-es {
+            font-family: 'Cormorant Garamond', Georgia, serif;
+            font-size: 1.35rem;
+            color: var(--accent);
+            margin-bottom: 1.8rem;
+            letter-spacing: 0.01em;
+        }
+
+        /* Japanese */
+        .verse-ja {
+            font-family: 'Noto Sans JP', sans-serif;
+            font-size: 0.95rem;
+            font-weight: 200;
+            color: rgba(212, 208, 202, 0.35);
+            margin-bottom: 1.2rem;
+            letter-spacing: 0.08em;
+        }
+
+        /* Arabic — RTL */
+        .verse-ar {
+            font-family: 'Noto Sans Arabic', sans-serif;
+            font-size: 1rem;
+            font-weight: 200;
+            color: rgba(212, 208, 202, 0.25);
+            direction: rtl;
+            margin-bottom: 1.2rem;
+        }
+
+        /* Korean */
+        .verse-ko {
+            font-family: 'Noto Sans KR', sans-serif;
+            font-size: 0.9rem;
+            font-weight: 200;
+            color: rgba(212, 208, 202, 0.20);
+            margin-bottom: 1.2rem;
+            letter-spacing: 0.04em;
+        }
+
+        /* Russian / Cyrillic */
+        .verse-ru {
+            font-family: 'Cormorant Garamond', Georgia, serif;
+            font-size: 0.95rem;
+            font-weight: 300;
+            color: rgba(212, 208, 202, 0.15);
+            margin-bottom: 1.2rem;
+            letter-spacing: 0.03em;
+        }
+
+        /* Hindi / Devanagari */
+        .verse-hi {
+            font-family: 'Noto Sans Devanagari', sans-serif;
+            font-size: 0.9rem;
+            font-weight: 200;
+            color: rgba(212, 208, 202, 0.10);
+        }
+
+        /* Vertical line */
+        .line {
+            width: 1px;
+            height: 50px;
+            background: linear-gradient(to bottom, transparent, var(--text-dim), transparent);
+            margin: 2rem 0;
+            opacity: 0;
+            animation: fadeIn 1.5s ease 4s both;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(8px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Contact */
+        .signal {
+            font-family: 'Space Mono', monospace;
+            font-size: 0.6rem;
+            letter-spacing: 0.15em;
+            color: var(--text-dim);
+            text-decoration: none;
+            transition: color 0.6s ease;
+            opacity: 0;
+            animation: fadeIn 1.5s ease 4.4s both;
+        }
+
+        .signal:hover {
+            color: var(--accent);
+        }
+
+        /* Corner details */
+        .epoch {
+            position: fixed;
+            bottom: 2rem;
+            right: 2.5rem;
+            font-family: 'Space Mono', monospace;
+            font-size: 0.55rem;
+            letter-spacing: 0.3em;
+            color: var(--text-ghost);
+            z-index: 6;
+            writing-mode: vertical-rl;
+            opacity: 0;
+            animation: fadeIn 1.5s ease 4.8s both;
+        }
+
+        .coord {
+            position: fixed;
+            top: 2rem;
+            left: 2.5rem;
+            font-family: 'Space Mono', monospace;
+            font-size: 0.55rem;
+            letter-spacing: 0.15em;
+            color: var(--text-ghost);
+            z-index: 6;
+            opacity: 0;
+            animation: fadeIn 1.5s ease 4.8s both;
+        }
+
+        /* Responsive */
+        @media (max-width: 700px) {
+            .sigil {
+                width: 130px;
+                height: 130px;
+                margin-bottom: 2.5rem;
+            }
+            .verse {
+                white-space: normal;
+                max-width: 90vw;
+                padding: 0 1rem;
+            }
+            .verse-es {
+                font-size: 1.05rem;
+            }
+            .verse-ja, .verse-ar, .verse-ru {
+                font-size: 0.8rem;
+            }
+            .verse-ko, .verse-hi {
+                font-size: 0.75rem;
+            }
+            .coord, .epoch {
+                display: none;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <canvas id="void"></canvas>
+
+    <span class="coord">6.2442° N, 75.5812° W</span>
+
+    <div class="core">
+        <div class="sigil">
+            <img src="logo-new.png" alt="">
+        </div>
+
+        <div class="babel">
+            <p class="verse verse-es">Cae la flor de silicio; el suelo que la espera es apenas humo de luz.</p>
+            <p class="verse verse-ja">シリコンの花が落ちる。待ち受ける大地は、ただ光の煙にすぎない。</p>
+            <p class="verse verse-ar">تسقط زهرة السيليكون؛ الأرض التي تنتظرها ليست سوى دخان من ضوء</p>
+            <p class="verse verse-ko">실리콘 꽃이 떨어진다 — 기다리는 땅은 빛의 연기일 뿐.</p>
+            <p class="verse verse-ru">Падает кремниевый цветок; земля, что ждёт его — лишь дым из света.</p>
+            <p class="verse verse-hi">सिलिकॉन का फूल गिरता है; प्रतीक्षित धरती केवल प्रकाश का धुआँ।</p>
+        </div>
+
+        <div class="line"></div>
+
+        <a href="mailto:admin@antireallabs.com" class="signal">admin@antireallabs.com</a>
+    </div>
+
+    <span class="epoch">MMXXVI</span>
+
+    <script>
+        const canvas = document.getElementById('void');
+        const ctx = canvas.getContext('2d');
+        let w, h, particles = [];
+
+        function resize() {
+            w = canvas.width = window.innerWidth;
+            h = canvas.height = window.innerHeight;
+        }
+
+        function createParticles() {
+            particles = [];
+            const count = Math.floor((w * h) / 12000);
+            for (let i = 0; i < count; i++) {
+                particles.push({
+                    x: Math.random() * w,
+                    y: Math.random() * h,
+                    r: Math.random() * 1.2 + 0.2,
+                    dx: (Math.random() - 0.5) * 0.15,
+                    dy: (Math.random() - 0.5) * 0.1,
+                    alpha: Math.random() * 0.3 + 0.05,
+                    pulse: Math.random() * Math.PI * 2,
+                    pulseSpeed: Math.random() * 0.008 + 0.002
+                });
+            }
+        }
+
+        function draw() {
+            ctx.clearRect(0, 0, w, h);
+            for (const p of particles) {
+                p.x += p.dx;
+                p.y += p.dy;
+                p.pulse += p.pulseSpeed;
+
+                if (p.x < -10) p.x = w + 10;
+                if (p.x > w + 10) p.x = -10;
+                if (p.y < -10) p.y = h + 10;
+                if (p.y > h + 10) p.y = -10;
+
+                const a = p.alpha * (0.5 + 0.5 * Math.sin(p.pulse));
+                ctx.beginPath();
+                ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+                ctx.fillStyle = `rgba(184, 165, 138, ${a})`;
+                ctx.fill();
+            }
+            requestAnimationFrame(draw);
+        }
+
+        window.addEventListener('resize', () => { resize(); createParticles(); });
+        resize();
+        createParticles();
+        draw();
+
+        let mx = -1000, my = -1000;
+        document.addEventListener('mousemove', (e) => {
+            mx = e.clientX;
+            my = e.clientY;
+        });
+
+        setInterval(() => {
+            for (const p of particles) {
+                const ddx = p.x - mx;
+                const ddy = p.y - my;
+                const dist = Math.sqrt(ddx * ddx + ddy * ddy);
+                if (dist < 120) {
+                    p.dx += ddx * 0.0003;
+                    p.dy += ddy * 0.0003;
+                }
+                p.dx *= 0.999;
+                p.dy *= 0.999;
+            }
+        }, 16);
+    </script>
+
+</body>
+</html>
