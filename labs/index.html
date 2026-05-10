@@ -1,0 +1,404 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Anti Real Labs · Labs</title>
+    <meta name="description" content="Anti Real Labs es una empresa colombiana de herramientas cíborg-académicas para lectores intensos.">
+    <meta property="og:title" content="Anti Real Labs · Labs">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://antireallabs.com/labs">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&family=Space+Mono:wght@400&display=swap" rel="stylesheet">
+    <style>
+        *, *::before, *::after {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --bg: #050505;
+            --text: #d4d0ca;
+            --text-soft: rgba(212, 208, 202, 0.66);
+            --text-dim: #3a3835;
+            --text-ghost: #1e1d1b;
+            --accent: #b8a58a;
+            --rule: rgba(212, 208, 202, 0.1);
+        }
+
+        html {
+            -webkit-font-smoothing: antialiased;
+        }
+
+        body {
+            min-height: 100vh;
+            background: var(--bg);
+            color: var(--text);
+            font-family: 'Cormorant Garamond', Georgia, serif;
+            position: relative;
+            cursor: crosshair;
+            overflow-x: hidden;
+        }
+
+        canvas#void {
+            position: fixed;
+            inset: 0;
+            z-index: 0;
+            opacity: 0.34;
+        }
+
+        body::after {
+            content: '';
+            position: fixed;
+            inset: 0;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.025'/%3E%3C/svg%3E");
+            pointer-events: none;
+            z-index: 10;
+        }
+
+        body::before {
+            content: '';
+            position: fixed;
+            inset: 0;
+            background: radial-gradient(ellipse at center, transparent 30%, rgba(0,0,0,0.74) 100%);
+            pointer-events: none;
+            z-index: 5;
+        }
+
+        .page {
+            position: relative;
+            z-index: 6;
+            width: min(720px, calc(100% - 3rem));
+            margin: 0 auto;
+            padding: 7rem 0 8rem;
+            animation: materialize 2s cubic-bezier(0.16, 1, 0.3, 1) both;
+        }
+
+        @keyframes materialize {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+                filter: blur(8px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+                filter: blur(0);
+            }
+        }
+
+        .coord {
+            position: fixed;
+            top: 2rem;
+            left: 2.5rem;
+            z-index: 6;
+            color: var(--text-ghost);
+            font-family: 'Space Mono', monospace;
+            font-size: 0.55rem;
+            letter-spacing: 0.15em;
+        }
+
+        .epoch {
+            position: fixed;
+            right: 2.5rem;
+            bottom: 2rem;
+            z-index: 6;
+            color: var(--text-ghost);
+            font-family: 'Space Mono', monospace;
+            font-size: 0.55rem;
+            letter-spacing: 0.3em;
+            writing-mode: vertical-rl;
+        }
+
+        header {
+            margin-bottom: 5rem;
+        }
+
+        h1 {
+            color: var(--accent);
+            font-size: clamp(2.45rem, 7vw, 4.4rem);
+            font-style: italic;
+            font-weight: 300;
+            line-height: 0.95;
+            letter-spacing: 0;
+        }
+
+        .subtitle {
+            max-width: 620px;
+            margin-top: 1.35rem;
+            color: rgba(212, 208, 202, 0.62);
+            font-size: clamp(1.2rem, 3vw, 1.65rem);
+            font-style: italic;
+            font-weight: 300;
+            line-height: 1.34;
+        }
+
+        section {
+            padding: 3.2rem 0;
+            border-top: 1px solid var(--rule);
+        }
+
+        h2 {
+            margin-bottom: 1.35rem;
+            color: rgba(184, 165, 138, 0.88);
+            font-size: 1.45rem;
+            font-style: italic;
+            font-weight: 300;
+            letter-spacing: 0.02em;
+        }
+
+        h3 {
+            margin: 1.8rem 0 0.45rem;
+            color: rgba(212, 208, 202, 0.82);
+            font-size: 1.12rem;
+            font-style: italic;
+            font-weight: 300;
+        }
+
+        p, li {
+            color: var(--text-soft);
+            font-size: 1.08rem;
+            font-weight: 300;
+            line-height: 1.72;
+        }
+
+        p + p {
+            margin-top: 1rem;
+        }
+
+        ul {
+            list-style: none;
+        }
+
+        li + li {
+            margin-top: 0.65rem;
+        }
+
+        a {
+            color: rgba(184, 165, 138, 0.82);
+            text-decoration: none;
+            transition: color 0.6s ease;
+        }
+
+        a:hover {
+            color: var(--text);
+        }
+
+        .mono {
+            font-family: 'Space Mono', monospace;
+            font-size: 0.76rem;
+            letter-spacing: 0.08em;
+        }
+
+        .contact {
+            color: rgba(212, 208, 202, 0.42);
+        }
+
+        .home-link {
+            display: inline-block;
+            margin-top: 2rem;
+            color: var(--text-ghost);
+            font-family: 'Space Mono', monospace;
+            font-size: 0.55rem;
+            letter-spacing: 0.25em;
+        }
+
+        .bloom {
+            position: absolute;
+            bottom: 3rem;
+            left: 7vw;
+            width: 96px;
+            height: 54px;
+            z-index: 7;
+            border-radius: 4px;
+            overflow: hidden;
+            opacity: 0.42;
+            mix-blend-mode: screen;
+        }
+
+        .bloom video {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            image-rendering: pixelated;
+        }
+
+        .bloom::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            box-shadow: inset 0 0 15px rgba(0, 0, 0, 0.6);
+            pointer-events: none;
+        }
+
+        @media (max-width: 700px) {
+            .page {
+                width: min(88vw, 420px);
+                padding: 5rem 0 7rem;
+            }
+
+            header {
+                margin-bottom: 3.5rem;
+            }
+
+            section {
+                padding: 2.65rem 0;
+            }
+
+            p, li {
+                font-size: 1rem;
+            }
+
+            .coord, .epoch {
+                display: none;
+            }
+
+            .bloom {
+                width: 82px;
+                height: 46px;
+                bottom: 2rem;
+                left: 5vw;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <canvas id="void"></canvas>
+    <span class="coord">6.2442° N, 75.5812° W</span>
+
+    <main class="page">
+        <header>
+            <h1>Anti Real Labs</h1>
+            <p class="subtitle">Empresa colombiana de herramientas cíborg-académicas para lectores intensos.</p>
+        </header>
+
+        <section>
+            <h2>Manifiesto breve</h2>
+            <p>Lenguaje no es código. Es comunidad. Esa frase rige todo lo que construimos. Si lo que estás por hacer trata el lenguaje como código, estás contra el norte. Si lo trata como comunidad, estás con el norte.</p>
+        </section>
+
+        <section>
+            <h2>Productos</h2>
+
+            <h3><a href="https://colibripdf.com" target="_blank" rel="noopener noreferrer">Colibri</a></h3>
+            <p>Biblioteca web personal cíborg-académica para PDFs. Producto principal con motor cognitivo propio. Disponible en web Consumer, app nativa cross-platform Verse, e institucional para colegios Veritas.</p>
+
+            <h3><a href="https://simioplateado.com" target="_blank" rel="noopener noreferrer">Simio Plateado</a></h3>
+            <p>Sub-marca artística. Galería y tienda de ediciones limitadas.</p>
+
+            <h3><a href="https://petalogps.com" target="_blank" rel="noopener noreferrer">PetAlo</a></h3>
+            <p>Collar GPS inteligente para mascotas con IA integrada.</p>
+
+            <h3>RITMEDALLO</h3>
+            <p>Mapa musical de Medellín. En desarrollo.</p>
+        </section>
+
+        <section>
+            <h2>Stack técnico</h2>
+            <ul>
+                <li>Backend: Cloudflare Workers</li>
+                <li>Storage: Cloudflare D1 (SQLite), R2 (S3-compatible), KV (cache)</li>
+                <li>Auth: Better Auth con Google OAuth</li>
+                <li>IA: Workers AI (Llama 3.3), DeepSeek V3, OpenAI GPT-4o (modelos premium)</li>
+                <li>Pagos: Stripe</li>
+                <li>Hosting: Vercel (este sitio), Cloudflare Pages (Simio Plateado)</li>
+                <li>Versionado: GitHub bajo organización AntiRealLabs</li>
+            </ul>
+        </section>
+
+        <section>
+            <h2>Modelo de negocio</h2>
+            <ul>
+                <li>Suscripción SaaS individual: $4.99 promocional / $7.99 estándar / $4.99 estudiante verificado</li>
+                <li>Plan anual: $39.99 al año (33% descuento)</li>
+                <li>B2B institucional Veritas: $300-2,000 USD/mes según tamaño</li>
+                <li>Ediciones limitadas Simio Plateado: drops periódicos</li>
+            </ul>
+        </section>
+
+        <section>
+            <h2>Equipo y credenciales</h2>
+            <ul>
+                <li>Founder: Juan David Mackinnon Espinosa</li>
+                <li>Operación: Medellín, Colombia (6.2442° N, 75.5812° W)</li>
+                <li>DUNS registrado</li>
+                <li>Apple Developer Program activo</li>
+                <li>Google Play Developer Program activo</li>
+                <li>Trabajo orquestado con agentes IA (Claude, Codex)</li>
+            </ul>
+        </section>
+
+        <section>
+            <h2>Contacto</h2>
+            <p><a class="contact mono" href="mailto:admin@antireallabs.com">admin@antireallabs.com</a></p>
+            <a class="home-link" href="/">home</a>
+        </section>
+    </main>
+
+    <div class="bloom">
+        <video autoplay loop muted playsinline>
+            <source src="../flor.mp4" type="video/mp4">
+        </video>
+    </div>
+
+    <span class="epoch">MMXXVI</span>
+
+    <script>
+        const canvas = document.getElementById('void');
+        const ctx = canvas.getContext('2d');
+        let w, h, particles = [];
+
+        function resize() {
+            w = canvas.width = window.innerWidth;
+            h = canvas.height = window.innerHeight;
+        }
+
+        function createParticles() {
+            particles = [];
+            const count = Math.floor((w * h) / 15000);
+            for (let i = 0; i < count; i++) {
+                particles.push({
+                    x: Math.random() * w,
+                    y: Math.random() * h,
+                    r: Math.random() * 1.1 + 0.2,
+                    dx: (Math.random() - 0.5) * 0.12,
+                    dy: (Math.random() - 0.5) * 0.08,
+                    alpha: Math.random() * 0.24 + 0.04,
+                    pulse: Math.random() * Math.PI * 2,
+                    pulseSpeed: Math.random() * 0.007 + 0.002
+                });
+            }
+        }
+
+        function draw() {
+            ctx.clearRect(0, 0, w, h);
+            for (const p of particles) {
+                p.x += p.dx;
+                p.y += p.dy;
+                p.pulse += p.pulseSpeed;
+
+                if (p.x < -10) p.x = w + 10;
+                if (p.x > w + 10) p.x = -10;
+                if (p.y < -10) p.y = h + 10;
+                if (p.y > h + 10) p.y = -10;
+
+                const a = p.alpha * (0.5 + 0.5 * Math.sin(p.pulse));
+                ctx.beginPath();
+                ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+                ctx.fillStyle = `rgba(184, 165, 138, ${a})`;
+                ctx.fill();
+            }
+            requestAnimationFrame(draw);
+        }
+
+        window.addEventListener('resize', () => { resize(); createParticles(); });
+        resize();
+        createParticles();
+        draw();
+    </script>
+
+</body>
+</html>
