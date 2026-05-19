@@ -96,7 +96,7 @@
         .sigil {
             width: 180px;
             height: 180px;
-            margin-bottom: 3.5rem;
+            margin-bottom: 3.25rem;
             position: relative;
         }
 
@@ -126,13 +126,22 @@
             50% { transform: scale(1.05); opacity: 0.6; }
         }
 
+        .threshold {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: clamp(2.5rem, 6vw, 5rem);
+            align-items: center;
+            width: min(920px, calc(100vw - 4rem));
+        }
+
         /* Babel tower */
         .babel {
             display: flex;
             flex-direction: column;
             align-items: center;
+            justify-self: center;
+            text-align: center;
             gap: 0;
-            margin-bottom: 3rem;
         }
 
         .verse {
@@ -252,6 +261,55 @@
             color: var(--accent);
         }
 
+        .lab-link {
+            display: inline-block;
+            margin-top: 0.8rem;
+            font-size: 0.55rem;
+            letter-spacing: 0.25em;
+            color: var(--text-ghost);
+            animation: fadeIn 1.5s ease 4.65s both;
+        }
+
+        .sibling-links {
+            display: flex;
+            flex-direction: column;
+            gap: 0.7rem;
+            width: min(220px, 100%);
+            justify-self: center;
+            opacity: 0;
+            animation: fadeIn 1.5s ease 2.8s both;
+        }
+
+        .sibling-links a {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 2.55rem;
+            padding: 0.65rem 0.95rem;
+            border: 1px solid rgba(184, 165, 138, 0.08);
+            border-radius: 2px;
+            background: rgba(212, 208, 202, 0.015);
+            color: rgba(212, 208, 202, 0.34);
+            font-family: 'Cormorant Garamond', Georgia, serif;
+            font-size: 0.95rem;
+            font-style: italic;
+            font-weight: 300;
+            letter-spacing: 0.08em;
+            text-decoration: none;
+            transition:
+                border-color 0.6s ease,
+                background 0.6s ease,
+                color 0.6s ease,
+                transform 0.6s ease;
+        }
+
+        .sibling-links a:hover {
+            border-color: rgba(184, 165, 138, 0.24);
+            background: rgba(184, 165, 138, 0.035);
+            color: var(--accent);
+            transform: translateX(4px);
+        }
+
         /* Pixel art flower */
         .bloom {
             position: fixed;
@@ -328,6 +386,15 @@
                 height: 130px;
                 margin-bottom: 2.5rem;
             }
+            .threshold {
+                grid-template-columns: 1fr;
+                gap: 2.25rem;
+                width: min(90vw, 360px);
+            }
+            .babel {
+                align-items: center;
+                text-align: center;
+            }
             .verse {
                 white-space: normal;
                 max-width: 90vw;
@@ -341,6 +408,14 @@
             }
             .verse-ko, .verse-hi {
                 font-size: 0.75rem;
+            }
+            .sibling-links {
+                justify-self: center;
+                width: min(270px, 100%);
+            }
+            .sibling-links a {
+                min-height: 2.8rem;
+                font-size: 0.95rem;
             }
             .bloom {
                 width: 90px;
@@ -365,18 +440,27 @@
             <img src="logo-new.png" alt="">
         </div>
 
-        <div class="babel">
-            <p class="verse verse-es">Aquellas manos que compusieron el universo, desmantelaron todo el tejido de la realidad.</p>
-            <p class="verse verse-ja">宇宙を組み上げたその手が、現実の織物をすべて解き放った。</p>
-            <p class="verse verse-ar">تلك الأيدي التي صاغت الكون، فكّكت نسيج الواقع بأكمله</p>
-            <p class="verse verse-ko">우주를 지은 그 손이, 현실의 모든 직물을 해체했다.</p>
-            <p class="verse verse-ru">Те руки, что сложили вселенную, разобрали всю ткань реальности.</p>
-            <p class="verse verse-hi">जिन हाथों ने ब्रह्मांड की रचना की, उन्होंने वास्तविकता का सारा ताना-बाना उधेड़ दिया।</p>
+        <div class="threshold">
+            <div class="babel">
+                <p class="verse verse-es">Aquellas manos que compusieron el universo, desmantelaron todo el tejido de la realidad.</p>
+                <p class="verse verse-ja">宇宙を組み上げたその手が、現実の織物をすべて解き放った。</p>
+                <p class="verse verse-ar">تلك الأيدي التي صاغت الكون، فكّكت نسيج الواقع بأكمله</p>
+                <p class="verse verse-ko">우주를 지은 그 손이, 현실의 모든 직물을 해체했다.</p>
+                <p class="verse verse-ru">Те руки, что сложили вселенную, разобрали всю ткань реальности.</p>
+                <p class="verse verse-hi">जिन हाथों ने ब्रह्मांड की रचना की, उन्होंने वास्तविकता का सारा ताना-बाना उधेड़ दिया।</p>
+            </div>
+
+            <div class="sibling-links" aria-label="Sitios hermanos">
+                <a href="https://colibripdf.com" target="_blank" rel="noopener noreferrer">colibripdf</a>
+                <a href="https://petalogps.com" target="_blank" rel="noopener noreferrer">petalogps</a>
+                <a href="https://simioplateado.com" target="_blank" rel="noopener noreferrer">simioplateado</a>
+            </div>
         </div>
 
         <div class="line"></div>
 
         <a href="mailto:admin@antireallabs.com" class="signal">admin@antireallabs.com</a>
+        <a href="/labs" class="signal lab-link">labs</a>
     </div>
 
     <!-- Pixel art flower -->
