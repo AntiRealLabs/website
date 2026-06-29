@@ -131,10 +131,11 @@
 
         .threshold {
             display: grid;
-            grid-template-columns: repeat(2, minmax(0, 1fr));
-            gap: clamp(2.5rem, 6vw, 5rem);
+            grid-template-columns: minmax(0, 0.95fr) minmax(0, 1.05fr);
+            gap: clamp(3rem, 6vw, 6rem);
             align-items: center;
-            width: min(920px, calc(100vw - 4rem));
+            justify-items: center;
+            width: min(1280px, calc(100vw - 4rem));
         }
 
         /* Babel tower */
@@ -275,8 +276,9 @@
 
         .sibling-links {
             display: grid;
-            gap: 0.78rem;
-            width: min(250px, 100%);
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+            gap: clamp(0.75rem, 1.35vw, 1rem);
+            width: min(660px, 100%);
             justify-self: center;
             opacity: 0;
             animation: fadeIn 1.5s ease 2.8s both;
@@ -287,9 +289,10 @@
             flex-direction: column;
             align-items: center;
             justify-content: center;
-            height: 5.15rem;
-            padding: 0.55rem 0.9rem 0.6rem;
-            border: 1px solid rgba(184, 165, 138, 0.1);
+            aspect-ratio: 1 / 1;
+            min-height: 0;
+            padding: 0.85rem 0.7rem 0.9rem;
+            border: 1px solid rgba(184, 165, 138, 0.12);
             border-radius: 2px;
             background:
                 linear-gradient(135deg, rgba(212, 208, 202, 0.026), rgba(184, 165, 138, 0.012));
@@ -305,21 +308,13 @@
                 transform 0.6s ease;
         }
 
-        .sibling-links a:nth-child(2) {
-            margin-left: 0.8rem;
-        }
-
-        .sibling-links a:nth-child(3) {
-            margin-left: -0.35rem;
-        }
-
         .brand-mark {
             display: block;
             width: 100%;
-            max-width: 112px;
-            height: 3rem;
+            max-width: 146px;
+            height: 4.62rem;
             object-fit: contain;
-            opacity: 0.72;
+            opacity: 0.8;
             filter: saturate(0.78) contrast(0.96);
             transition:
                 opacity 0.6s ease,
@@ -328,25 +323,25 @@
         }
 
         .brand-mark-colibri {
-            max-width: 104px;
-            height: 3.18rem;
+            max-width: 144px;
+            height: 4.92rem;
         }
 
         .brand-mark-petalo {
-            max-width: 90px;
-            height: 2.85rem;
+            max-width: 126px;
+            height: 4.42rem;
         }
 
         .brand-mark-simio {
-            max-width: 112px;
-            height: 3.08rem;
-            opacity: 0.6;
+            max-width: 144px;
+            height: 4.78rem;
+            opacity: 0.78;
             filter: contrast(0.88);
         }
 
         .brand-name {
-            margin-top: 0.28rem;
-            font-size: 0.74rem;
+            margin-top: 0.5rem;
+            font-size: 0.88rem;
             font-style: italic;
             letter-spacing: 0.09em;
             line-height: 1;
@@ -358,7 +353,7 @@
                 linear-gradient(135deg, rgba(184, 165, 138, 0.06), rgba(212, 208, 202, 0.022));
             color: var(--accent);
             filter: drop-shadow(0 0 18px rgba(184, 165, 138, 0.055));
-            transform: translateX(4px) translateY(-1px);
+            transform: translateY(-3px);
         }
 
         .sibling-links a:hover .brand-mark {
@@ -484,17 +479,28 @@
             }
             .sibling-links {
                 justify-self: center;
-                width: min(285px, 100%);
+                grid-template-columns: 1fr;
+                gap: 0.72rem;
+                width: min(260px, 100%);
             }
             .sibling-links a {
-                height: 5.25rem;
-            }
-            .sibling-links a:nth-child(2),
-            .sibling-links a:nth-child(3) {
-                margin-left: 0;
+                aspect-ratio: auto;
+                height: 7.05rem;
             }
             .brand-mark {
-                height: 3rem;
+                height: 3.95rem;
+            }
+            .brand-mark-colibri {
+                height: 4.1rem;
+            }
+            .brand-mark-petalo {
+                height: 3.65rem;
+            }
+            .brand-mark-simio {
+                height: 3.95rem;
+            }
+            .brand-name {
+                font-size: 0.78rem;
             }
             .infrastructure {
                 max-width: min(320px, 86vw);
@@ -534,6 +540,10 @@
             </div>
 
             <div class="sibling-links" aria-label="Sitios hermanos">
+                <a href="https://simioplateado.com" target="_blank" rel="noopener noreferrer">
+                    <img class="brand-mark brand-mark-simio" src="assets/brand/simioplateado-white.png" alt="" loading="lazy">
+                    <span class="brand-name">simioplateado</span>
+                </a>
                 <a href="https://colibripdf.com" target="_blank" rel="noopener noreferrer">
                     <img class="brand-mark brand-mark-colibri" src="assets/brand/colibripdf.png" alt="" loading="lazy">
                     <span class="brand-name">colibripdf</span>
@@ -541,10 +551,6 @@
                 <a href="https://petalogps.com" target="_blank" rel="noopener noreferrer">
                     <img class="brand-mark brand-mark-petalo" src="assets/brand/petalogps.svg" alt="" loading="lazy">
                     <span class="brand-name">petalogps</span>
-                </a>
-                <a href="https://simioplateado.com" target="_blank" rel="noopener noreferrer">
-                    <img class="brand-mark brand-mark-simio" src="assets/brand/simioplateado-white.png" alt="" loading="lazy">
-                    <span class="brand-name">simioplateado</span>
                 </a>
             </div>
         </div>
