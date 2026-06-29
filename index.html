@@ -76,7 +76,7 @@
             flex-direction: column;
             align-items: center;
             text-align: center;
-            padding: 3rem 2rem;
+            padding: 2.2rem 2rem;
             animation: materialize 2.5s cubic-bezier(0.16, 1, 0.3, 1) both;
         }
 
@@ -94,9 +94,9 @@
         }
 
         .sigil {
-            width: 180px;
-            height: 180px;
-            margin-bottom: 3.25rem;
+            width: 164px;
+            height: 164px;
+            margin-bottom: 2.45rem;
             position: relative;
         }
 
@@ -235,7 +235,7 @@
             width: 1px;
             height: 50px;
             background: linear-gradient(to bottom, transparent, var(--text-dim), transparent);
-            margin: 2rem 0;
+            margin: 1.55rem 0;
             opacity: 0;
             animation: fadeIn 1.5s ease 4s both;
         }
@@ -271,10 +271,9 @@
         }
 
         .sibling-links {
-            display: flex;
-            flex-direction: column;
-            gap: 0.7rem;
-            width: min(220px, 100%);
+            display: grid;
+            gap: 0.78rem;
+            width: min(250px, 100%);
             justify-self: center;
             opacity: 0;
             animation: fadeIn 1.5s ease 2.8s both;
@@ -282,32 +281,103 @@
 
         .sibling-links a {
             display: flex;
+            flex-direction: column;
             align-items: center;
             justify-content: center;
-            min-height: 2.55rem;
-            padding: 0.65rem 0.95rem;
-            border: 1px solid rgba(184, 165, 138, 0.08);
+            height: 5.15rem;
+            padding: 0.55rem 0.9rem 0.6rem;
+            border: 1px solid rgba(184, 165, 138, 0.1);
             border-radius: 2px;
-            background: rgba(212, 208, 202, 0.015);
+            background:
+                linear-gradient(135deg, rgba(212, 208, 202, 0.026), rgba(184, 165, 138, 0.012));
             color: rgba(212, 208, 202, 0.34);
             font-family: 'Cormorant Garamond', Georgia, serif;
-            font-size: 0.95rem;
-            font-style: italic;
             font-weight: 300;
-            letter-spacing: 0.08em;
             text-decoration: none;
             transition:
                 border-color 0.6s ease,
                 background 0.6s ease,
                 color 0.6s ease,
+                filter 0.6s ease,
                 transform 0.6s ease;
         }
 
+        .sibling-links a:nth-child(2) {
+            margin-left: 0.8rem;
+        }
+
+        .sibling-links a:nth-child(3) {
+            margin-left: -0.35rem;
+        }
+
+        .brand-mark {
+            display: block;
+            width: 100%;
+            max-width: 112px;
+            height: 3rem;
+            object-fit: contain;
+            opacity: 0.72;
+            filter: saturate(0.78) contrast(0.96);
+            transition:
+                opacity 0.6s ease,
+                filter 0.6s ease,
+                transform 0.6s ease;
+        }
+
+        .brand-mark-colibri {
+            max-width: 104px;
+            height: 3.18rem;
+        }
+
+        .brand-mark-petalo {
+            max-width: 90px;
+            height: 2.85rem;
+        }
+
+        .brand-mark-simio {
+            max-width: 112px;
+            height: 3.08rem;
+            opacity: 0.6;
+            filter: contrast(0.88);
+        }
+
+        .brand-name {
+            margin-top: 0.28rem;
+            font-size: 0.74rem;
+            font-style: italic;
+            letter-spacing: 0.09em;
+            line-height: 1;
+        }
+
         .sibling-links a:hover {
-            border-color: rgba(184, 165, 138, 0.24);
-            background: rgba(184, 165, 138, 0.035);
+            border-color: rgba(184, 165, 138, 0.28);
+            background:
+                linear-gradient(135deg, rgba(184, 165, 138, 0.06), rgba(212, 208, 202, 0.022));
             color: var(--accent);
-            transform: translateX(4px);
+            filter: drop-shadow(0 0 18px rgba(184, 165, 138, 0.055));
+            transform: translateX(4px) translateY(-1px);
+        }
+
+        .sibling-links a:hover .brand-mark {
+            opacity: 0.92;
+            filter: saturate(1) contrast(1.08);
+            transform: scale(1.025);
+        }
+
+        .sibling-links a:hover .brand-mark-simio {
+            opacity: 0.88;
+            filter: contrast(1.03);
+        }
+
+        .infrastructure {
+            display: inline-block;
+            max-width: min(680px, calc(100vw - 4rem));
+            margin-top: 1.05rem;
+            color: rgba(58, 56, 53, 0.92);
+            font-size: 0.52rem;
+            line-height: 1.8;
+            letter-spacing: 0.13em;
+            animation: fadeIn 1.5s ease 4.8s both;
         }
 
         /* Pixel art flower */
@@ -411,11 +481,21 @@
             }
             .sibling-links {
                 justify-self: center;
-                width: min(270px, 100%);
+                width: min(285px, 100%);
             }
             .sibling-links a {
-                min-height: 2.8rem;
-                font-size: 0.95rem;
+                height: 5.25rem;
+            }
+            .sibling-links a:nth-child(2),
+            .sibling-links a:nth-child(3) {
+                margin-left: 0;
+            }
+            .brand-mark {
+                height: 3rem;
+            }
+            .infrastructure {
+                max-width: min(320px, 86vw);
+                margin-top: 0.95rem;
             }
             .bloom {
                 width: 90px;
@@ -451,9 +531,18 @@
             </div>
 
             <div class="sibling-links" aria-label="Sitios hermanos">
-                <a href="https://colibripdf.com" target="_blank" rel="noopener noreferrer">colibripdf</a>
-                <a href="https://petalogps.com" target="_blank" rel="noopener noreferrer">petalogps</a>
-                <a href="https://simioplateado.com" target="_blank" rel="noopener noreferrer">simioplateado</a>
+                <a href="https://colibripdf.com" target="_blank" rel="noopener noreferrer">
+                    <img class="brand-mark brand-mark-colibri" src="assets/brand/colibripdf.png" alt="" loading="lazy">
+                    <span class="brand-name">colibripdf</span>
+                </a>
+                <a href="https://petalogps.com" target="_blank" rel="noopener noreferrer">
+                    <img class="brand-mark brand-mark-petalo" src="assets/brand/petalogps.svg" alt="" loading="lazy">
+                    <span class="brand-name">petalogps</span>
+                </a>
+                <a href="https://simioplateado.com" target="_blank" rel="noopener noreferrer">
+                    <img class="brand-mark brand-mark-simio" src="assets/brand/simioplateado-white.png" alt="" loading="lazy">
+                    <span class="brand-name">simioplateado</span>
+                </a>
             </div>
         </div>
 
@@ -461,6 +550,7 @@
 
         <a href="mailto:admin@antireallabs.com" class="signal">admin@antireallabs.com</a>
         <a href="/labs" class="signal lab-link">labs</a>
+        <p class="signal infrastructure">herramientas e infraestructura: Cloudflare · Vercel · GitHub · Fastmail · OpenAI · Anthropic · Llama</p>
     </div>
 
     <!-- Pixel art flower -->
